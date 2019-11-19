@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Row, Col} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import {connect} from "react-redux";
 import _ from "lodash";
 import * as movieActions from "../../actions/movie-db-actions";
@@ -29,7 +29,6 @@ class MovieDbContainer extends React.Component {
                 const nextPage = this.state.currentPage + 1;
                 this.props.getMoviesList(nextPage);
                 this.setState({currentPage: nextPage});
-                console.log(document.documentElement.offsetHeight);
             }
         }
     };
@@ -38,10 +37,10 @@ class MovieDbContainer extends React.Component {
         const movies = movieDbHelpers.getMovieList(topMovies.response);
         return (
             <div>
-                <Container>
-                    <Row>
+                <Container style={{margin: "2em"}}>
+                    {/*<Row>
                         <p>Search will go here!</p>
-                    </Row>
+                    </Row> */}
                     <Row>
                         <MoviesListComponent movies={movies} isLoading={topMovies.isLoading} />
                     </Row>
@@ -52,7 +51,6 @@ class MovieDbContainer extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
     return {
         topMovies: state.movieDb.moviesList
     };
@@ -66,7 +64,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MovieDbContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDbContainer);

@@ -2,12 +2,16 @@ const IMAGE_BASE_URL = (width = 300) => `https://image.tmdb.org/t/p/w${width}`;
 
 const updateMoviePosterUrl = (movieResult, width = 300) => ({
     ...movieResult,
-    backdrop_path: `${IMAGE_BASE_URL(width)}${movieResult.backdrop_path}`,
+    backdrop_path: movieResult.backdrop_path ? `${IMAGE_BASE_URL(width)}${movieResult.backdrop_path}` : null,
     poster_path: `${IMAGE_BASE_URL(width)}${movieResult.poster_path}`
 });
 
 export const getMovieList = moviesList => {
     return !!moviesList ? [...moviesList.results.map(movie => updateMoviePosterUrl(movie))] : null;
+};
+
+export const getMovieDetails = movie => {
+    return !!movie ? updateMoviePosterUrl(movie) : null;
 };
 
 export const createReducer = (initialState = {}, actionHandlers = {}) => {
